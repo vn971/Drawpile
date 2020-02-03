@@ -11,8 +11,27 @@ language: cpp
 
 before_install:
 - docker pull debian:stretch-slim
-- docker run debian:stretch-slim apt-get -y install build-essential cmake extra-cmake-modules gcc-multilib g++ libkf5archive-dev libkf5dnssd-dev libminiupnpc-dev libsodium-dev qtbase5-dev libqt5svg5-dev qttools5-dev qtmultimedia5-dev
 
 script:
-- docker run debian:stretch-slim sh -c "mkdir -p build && cd build && cmake .. && make"
+- docker run debian:stretch-slim sh -c "
+  apt-get update
+
+  apt-get -y install \
+    build-essential \
+    cmake \
+    extra-cmake-modules \
+    gcc-multilib \
+    g++ \
+    libkf5archive-dev \
+    libkf5dnssd-dev \
+    libminiupnpc-dev \
+    libsodium-dev \
+    qtbase5-dev \
+    libqt5svg5-dev \
+    qttools5-dev \
+    qtmultimedia5-dev
+
+  mkdir -p build
+  cd build && cmake .. && make
+  "
 
